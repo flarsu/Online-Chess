@@ -47,6 +47,8 @@ class GameState() :
                         self.getNightMoves(r, c, moves)    
                     if piece == 'B':
                         self.getBishopMoves(r, c, moves)
+                    if piece == 'Q':
+                        self.getQueenMoves(r, c, moves)    
 
                         
         return moves
@@ -135,8 +137,26 @@ class GameState() :
                    break             
                         
                         
-                
+    def getQueenMoves(self, r, c, moves):
+        opposite = 'b' if  self.whiteToMove else 'w'
+        directions = ((1,1),(1,-1),(-1,1),(-1,-1),(-1,0),(1,0),(0,-1),(0,1))
+        for d in directions:
+            for i in range(1,8):
+                endRow = r+ d[0]*i
+                endCol = c+ d[1]*i
 
+                if 0<=endRow<8 and 0<=endCol<8:
+                   endPiece = self.board[endRow][endCol]
+                   if endPiece == '0':
+                       moves.append(Move((r,c),(endRow,endCol), self.board))
+                   elif endPiece[0] == opposite:
+                       moves.append(Move((r,c),(endRow, endCol), self.board))
+                       break
+                   else:
+                       break
+                else:
+                   break             
+                        
 
 
 class Move():
