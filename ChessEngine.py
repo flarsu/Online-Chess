@@ -96,7 +96,21 @@ class GameState() :
                    break            
 
     def getNightMoves(self, r, c, moves):
-        pass            
+        opposite = 'b' if  self.whiteToMove else 'w'
+        directions = ((1,2),(-1,2),(2,1),(-2,1),(1,-2),(-1,-2),(2,-1),(-2,-1))
+        for d in directions:
+            endRow = r + d[0]  
+            endCol = c + d[1]
+
+            if 0<=endRow<8  and 0<=endCol<8:
+                endPiece = self.board[endRow][endCol]
+                if endPiece[0] == opposite or endPiece == '0':
+                    moves.append(Move((r,c),(endRow,endCol), self.board))
+                else :
+                    continue
+            else :
+                continue    
+
 
 
 class Move():
