@@ -50,6 +50,11 @@ class GameState() :
                     if piece == 'Q':
                         self.getQueenMoves(r, c, moves)    
 
+                    if piece == 'K':
+                        self.getKingMoves(r, c, moves)    
+
+
+
                         
         return moves
 
@@ -156,7 +161,22 @@ class GameState() :
                        break
                 else:
                    break             
-                        
+    def getKingMoves(self, r, c, moves):
+        opposite = 'b' if  self.whiteToMove else 'w'
+        directions = ((1,1),(1,-1),(-1,1),(-1,-1),(-1,0),(1,0),(0,-1),(0,1))
+        for d in directions:
+            endRow = r + d[0]  
+            endCol = c + d[1]
+
+            if 0<=endRow<8 and 0<=endCol<8:
+                endPiece = self.board[endRow][endCol]
+                if endPiece== '0' or endPiece[0]==opposite:
+                    moves.append(Move((r,c),(endRow,endCol), self.board))
+                else:
+                    continue
+            else:
+                continue        
+
 
 
 class Move():

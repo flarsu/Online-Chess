@@ -69,7 +69,7 @@ def drawGameState(screen, gs):
     drawPieces(screen, gs.board)
 
 def drawBoard(screen):
-    colors = [p.Color('white'), p.Color('dark cyan')]
+    colors = [p.Color('white'), p.Color('dark red')]
     for i in range(DIMENSION):
         for j in range(DIMENSION):
             color = colors[((i+j)%2)]
