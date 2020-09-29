@@ -99,28 +99,35 @@ class GameState() :
 
     def getPawnMoves(self,r, c, moves):
             if self.whiteToMove:
-                if self.board[r-1][c] == '0' :
-                    moves.append(Move((r,c),(r-1,c),self.board))
-                    if self.board[r-2][c]=='0' and r==6:
-                       moves.append(Move((r,c),(r-2, c),self.board))
-                if c-1>=0:
-                    if self.board[r-1][c-1][0] == 'b':
-                        moves.append(Move((r,c),(r-1,c-1),self.board))
-                if c+1<=len(self.board[0])-1:    
-                    if self.board[r-1][c+1][0]=='b' :
-                        moves.append(Move((r,c),(r-1,c+1),self.board))       
-
-            if not self.whiteToMove:
-                if self.board[r+1][c] == '0' or self.board[r+2][c]=='0':
-                    moves.append(Move((r,c),(r+1,c),self.board))
-                    if self.board[r+2][c]=='0' and r==1:
-                       moves.append(Move((r,c),(r+2, c),self.board))
-                if c-1>=0:
-                    if self.board[r+1][c-1][0] == 'w':
-                        moves.append(Move((r,c),(r+1,c-1),self.board))
-                if c+1<=len(self.board[0])-1:    
-                    if self.board[r+1][c+1][0]=='w' :
-                        moves.append(Move((r,c),(r+1,c+1),self.board))  
+                if r == 0:
+                    self.board[r][c] = 'wQ'
+                    
+                else:
+                    if self.board[r-1][c] == '0':
+                        moves.append(Move((r,c),(r-1,c), self.board))
+                        if r==6 and self.board[r-2][c]=='0':
+                            moves.append(Move((r,c),(r-2,c),self.board))
+                    if c-1>=0:
+                        if self.board[r-1][c-1][0]== 'b':
+                            moves.append(Move((r,c),(r-1,c-1),self.board))
+                    if c+1<=7:
+                        if self.board[r-1][c+1][0]=='b':
+                            moves.append(Move((r,c),(r-1,c+1),self.board))
+            else:
+                if r == 7:
+                    self.board[r][c] = 'bQ'
+                else:
+                    if self.board[r+1][c] == '0':
+                        moves.append(Move((r,c),(r+1,c), self.board))
+                        if r==1 and self.board[r+2][c]=='0':
+                            moves.append(Move((r,c),(r+2,c),self.board))
+                    if c-1>=0:
+                        if self.board[r+1][c-1][0]== 'w':
+                            moves.append(Move((r,c),(r+1,c-1),self.board))
+                    if c+1<=7:
+                        if self.board[r+1][c+1][0]=='w':
+                            moves.append(Move((r,c),(r+1,c+1),self.board))                                                 
+                   
 
     def getRookMoves(self, r, c, moves):
        opposite = 'b' if self.whiteToMove  else 'w'
