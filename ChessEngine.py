@@ -13,13 +13,20 @@ class GameState() :
                 ]
 
         self.whiteToMove = True
-        self.moveLog = []            
+        self.moveLog = []      
+        self.whiteKingLocation = (7,4)
+        self.blackKingLocation = (0,4)
+              
 
     def makeMove(self, move):
         self.board[move.startRow][move.startCol] ='0'
         self.board[move.endRow][move.endCol] = move.pieceMoved
         self.moveLog.append(move)
         self.whiteToMove = not self.whiteToMove
+        if move.pieceMoved == 'wK':
+            self.whiteKingLocation = (move.endRow,move.endCol)
+        if move.pieceMoved == 'bK':
+            self.blackKingLocation = (move.endRow,move.endCol)    
 
     def undoMove(self):
         if len(self.moveLog) != 0 :
@@ -27,9 +34,40 @@ class GameState() :
             self.board[move.startRow][move.startCol] = move.pieceMoved
             self.board[move.endRow][move.endCol] = move.pieceCaptured
             self.whiteToMove = not self.whiteToMove
-
+            if move.pieceMoved == 'wK':
+                self.whiteKingLocation = (move.startRow, move.startCol)
+            if move.pieceMoved == 'bK':
+                self.blackKingLocation = (move.startRow, move.startCol)    
     def getValidMoves(self):
-        return self.getAllPossibleMoves()
+        moves =  self.getAllPossibleMoves()
+        for i in range(len(moves)-1,-1,-1):
+            self.makeMove(moves[i])
+
+            self.whiteToMove = not self.whiteToMove
+
+            if self.inCheck():
+                moves.remove(moves[i])
+            self.whiteToMove = not self.whiteToMove
+            self.undoMove()    
+
+        return moves
+
+    def inCheck(self):
+        if self.whiteToMove:
+            return self.sqInAttack(self.whiteKingLocation[0],self.whiteKingLocation[1])
+        else:
+            return self.sqInAttack(self.blackKingLocation[0], self.blackKingLocation[1])    
+
+    def sqInAttack(self, r, c):
+        self.whiteToMove = not self.whiteToMove
+        oppMoves = self.getAllPossibleMoves()
+        self.whiteToMove = not self.whiteToMove
+        for move in oppMoves:
+            if move.endRow == r and move.endCol == c:
+                return True
+        
+
+
 
     def getAllPossibleMoves(self):
         moves = [Move((1,0),(2,0), self.board)]
@@ -177,7 +215,7 @@ class GameState() :
             else:
                 continue        
 
-
+    
 
 class Move():
     ranksToRows = {'1':7,'2':6, '3':5, '4':4, '5':3, '6':2, '7':1, '8':0}
