@@ -16,6 +16,8 @@ class GameState() :
         self.moveLog = []      
         self.whiteKingLocation = (7,4)
         self.blackKingLocation = (0,4)
+        self.Checkmate = False
+        self.Stalemate = False
               
 
     def makeMove(self, move):
@@ -49,6 +51,14 @@ class GameState() :
                 moves.remove(moves[i])
             self.whiteToMove = not self.whiteToMove
             self.undoMove()    
+        if len(moves)==0:
+            if self.inCheck():
+                self.Checkmate = True
+            else:
+                self.Stalemate = True
+        else:
+            self.Checkmate = False
+            self.Stalemate = False                
 
         return moves
 
@@ -67,10 +77,8 @@ class GameState() :
                 return True
         
 
-
-
     def getAllPossibleMoves(self):
-        moves = [Move((1,0),(2,0), self.board)]
+        moves = []
         for r in range(len(self.board)):
             for c in range(len(self.board[r])):
                 turn  = self.board[r][c][0]
@@ -222,7 +230,7 @@ class GameState() :
             else:
                 continue        
 
-    
+   
 
 class Move():
     ranksToRows = {'1':7,'2':6, '3':5, '4':4, '5':3, '6':2, '7':1, '8':0}

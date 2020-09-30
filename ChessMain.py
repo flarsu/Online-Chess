@@ -2,7 +2,7 @@ import pygame as p
 
 import ChessEngine as cE
 
-WIDTH = HEIGHT = 512
+WIDTH = HEIGHT = 680
 DIMENSION = 8
 
 SQ_SIZE = HEIGHT//DIMENSION
@@ -23,7 +23,7 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color('white'))
     gs = cE.GameState()
-    validMoves = gs.getValidMoves()
+    validMoves= gs.getValidMoves()
     madeMove = False
     load_images()
     running = True
@@ -33,6 +33,7 @@ def main():
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+
             elif e.type == p.MOUSEBUTTONDOWN:
                 location = p.mouse.get_pos()
                 col = location[0]//SQ_SIZE
@@ -58,7 +59,11 @@ def main():
                     madeMove = True
         if madeMove:
             validMoves = gs.getValidMoves()
-            madeMove = False              
+            madeMove = False          
+            
+        elif gs.Stalemate:
+            print('Draw')           
+               
         drawGameState(screen, gs)
         clock.tick(MAX_FPS)
         p.display.flip()     
@@ -67,6 +72,13 @@ def main():
 def drawGameState(screen, gs):
     drawBoard(screen)
     drawPieces(screen, gs.board)
+    if gs.Checkmate:
+            if gs.whiteToMove:
+                drawText(screen,'Black Won', (255,255,255))
+            else:
+            
+                drawText(screen,'White Won', (0,0,0))
+            
 
 def drawBoard(screen):
     colors = [p.Color('white'), p.Color('dark red')]
@@ -85,6 +97,11 @@ def drawPieces(screen, board):
                 screen.blit(Images[piece],p.Rect(j*SQ_SIZE,i*SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 
-
+def drawText(screen, text, color):
+    font = p.font.Font('futur.ttf', 64) 
+    text = font.render(text,True, color)
+    textRect = text.get_rect()
+    textRect.center = DIMENSION*SQ_SIZE//2,DIMENSION*SQ_SIZE//2
+    screen.blit(text, textRect)
 if __name__ == '__main__':
     main()
