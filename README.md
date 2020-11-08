@@ -2,10 +2,10 @@
 
 How to play - 
 * Requirements -
-      * python3.0 recommended
+      * python3.0 recommended<br>
       * pygame [command to install - pip install pygame]
 * Clone this repository
-* Execute  - python3 ChessMain.py command in the cloned file.
+* Execute  - python3 ChessMain.py command in the cloned file.<br>
 and now you are good to go. 
 
 
