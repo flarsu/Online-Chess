@@ -7,4 +7,5 @@ and now you are good to go.
 
 
 Future Development -
-* I will make it an Online Game where multiple player can connet and play hess against each other using SOcket Programing .
+* I will make it an Online Game where multiple players can connet and play Chess against each other.
+* Using Socket Programing .
