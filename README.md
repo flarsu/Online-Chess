@@ -1,7 +1,7 @@
 # Online-Chess
 
 How to play - 
-* Requirements -
+* Requirements -<br>
       * python3.0 recommended<br>
       * pygame [command to install - pip install pygame]
 * Clone this repository
