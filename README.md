@@ -1,8 +1,11 @@
 # Online-Chess
 
 How to play - 
-* Clone to repo
-* Execute  - python3 ChessMain.py
+* Requirements -
+      * python3.0 recommended
+      * pygame [command to install - pip install pygame]
+* Clone this repository
+* Execute  - python3 ChessMain.py command in the cloned file.
 and now you are good to go. 
 
 
